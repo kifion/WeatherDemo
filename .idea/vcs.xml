@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/demo-exoplayer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lenovoprofi" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lgmaster" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/light-touch" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/mera-meetup" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/poc_glucometer" vcs="Git" />
+  </component>
+</project>
