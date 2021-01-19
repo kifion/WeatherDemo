@@ -9,13 +9,13 @@ import com.example.weatherapp.repository.NetworkRepositoryImpl
 import kotlinx.coroutines.launch
 
 class HomeActivityViewModel() : ViewModel() {
-    var cities = MutableLiveData<CityDetailsModel>()
+    var details = MutableLiveData<CityDetailsModel>()
 
     var repository = NetworkRepositoryImpl()
 
     fun getCityDetails(city: CityModel) {
         this.viewModelScope.launch {
-            cities.postValue(repository.getCityDetails(city))
+            details.postValue(repository.getCityDetails(city))
         }
     }
 }

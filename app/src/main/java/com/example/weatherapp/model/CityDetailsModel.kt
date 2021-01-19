@@ -2,7 +2,7 @@ package com.example.weatherapp.model
 
 data class CityDetailsModel(
     var name: String = "",
-    var days: List<DayWeather> = emptyList()
+    var days: ArrayList<DayWeather> = arrayListOf()
 )
 
 data class DayWeather(
