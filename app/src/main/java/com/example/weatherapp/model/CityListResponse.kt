@@ -2,11 +2,11 @@ package com.example.weatherapp.model
 
 data class CityListResponse(
 	val startIndex: Int? = null,
-	val cities: List<City?>? = null,
+	val cities: List<CityResponse?>? = null,
 	val totalCitiesFound: Int? = null
 )
 
-data class City(
+data class CityResponse(
 		val elevation: Int? = null,
 		val featureCode: String? = null,
 		val geonameid: Int? = null,
@@ -27,7 +27,11 @@ data class City(
 		val asciiname: String? = null,
 		val modificationDate: String? = null,
 		val longitude: Double? = null
-)
+) {
+    fun toCityModel(): CityModel {
+		return CityModel(this.name!!)
+    }
+}
 
 data class AndroidImageURLs(
 	val hdpiImageURL: String? = null,
