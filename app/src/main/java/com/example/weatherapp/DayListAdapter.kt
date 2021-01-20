@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.weatherapp.model.DayWeather
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.recycler_view_day_item.view.*
 
 class DayListAdapter(private val clickListener: ClickListener) :
@@ -32,7 +34,16 @@ class DayListAdapter(private val clickListener: ClickListener) :
             setOnClickListener { clickListener.onItemClicked(item) }
             day_name.text = item.dayOfTheWeek.toString()
             day_temperature.text = item.high.toString()
+
+            Glide.with(this)
+                .load(getImage())
+                .centerCrop()
+                .into(day_weather_image)
         }
+    }
+
+    fun getImage(weatherType: String) => when(weatherType) {
+        "sunny" => getResources().getIdentifier("<your pakecgename>:drawable/abc", null, null)
     }
 
     interface ClickListener {

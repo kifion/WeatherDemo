@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.jackson.JacksonConverterFactory
 
 object NetworkService {
     private const val BASE_URL = " https://weather.exam.bottlerocketservices.com"
@@ -18,13 +19,12 @@ object NetworkService {
     private val client: OkHttpClient = OkHttpClient
         .Builder()
         .addInterceptor(loggingInterceptor)
-        //.addInterceptor(baseInterceptor)
         .build()
 
     fun retrofitService(): ApiService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(JacksonConverterFactory.create())
             .client(client)
             .build()
             .create(ApiService::class.java)

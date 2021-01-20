@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.weatherapp.model.CityDetailsModel
 import com.example.weatherapp.model.CityModel
 import com.example.weatherapp.model.DayWeather
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_search.*
 
 class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
     companion object {
@@ -21,10 +21,10 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
     private lateinit var viewModel: HomeActivityViewModel
     private val SEARCH_ACTIVITY_REQUEST_CODE = 0
 
-    //var cityModel: CityModel? = null
+    var details: CityDetailsModel? = null
 
     var dayListAdapter: DayListAdapter? = null
-    var hourlyListAdapter: DayListAdapter? = null
+    var hourlyListAdapter: HourlyListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,8 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
 
         viewModel.details.observe(this, Observer {
             it?.let {
-                initAdapters(it)
+                details = it
+                updateUi(it)
             }
         })
 
@@ -44,11 +45,39 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
         }
     }
 
-    private fun initAdapters(details: CityDetailsModel) {
+    private fun updateUi(details: CityDetailsModel) {
+        setHeaderImage(details)
+        setHeaderData(details)
+        initDaysAdapter(details)
+        initHoursAdapter(details)
+    }
+
+    private fun setHeaderData(details: CityDetailsModel) {
+        city.text = details.asciiName + ", " + details.code
+        date.text = details.date
+        time.text = details.date
+        temp.text = details.temperature.toString()
+    }
+
+    private fun setHeaderImage(details: CityDetailsModel) {
+        Glide.with(this)
+            .load(details.imageUrl)
+            .centerCrop()
+            .into(city_image)
+    }
+
+    private fun initDaysAdapter(details: CityDetailsModel) {
         dayListAdapter = DayListAdapter(this)
         dayListAdapter!!.items = details.days
-        search_result_list.adapter = dayListAdapter
-        search_result_list.layoutManager = LinearLayoutManager(this)
+        daily_list.adapter = dayListAdapter
+        daily_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun initHoursAdapter(details: CityDetailsModel, dayOfWeek: Int = 0) {
+        hourlyListAdapter = HourlyListAdapter()
+        hourlyListAdapter!!.items = details.days[dayOfWeek].hourlyWeather
+        hourly_list.adapter = hourlyListAdapter
+        hourly_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -57,7 +86,6 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
             SEARCH_ACTIVITY_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val selectedCity = data?.getParcelableExtra<CityModel>(CITY_KEY)
-                    //cityModel = selectedCity
                     viewModel.getCityDetails(selectedCity!!)
                 }
             }
@@ -65,6 +93,6 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
     }
 
     override fun onItemClicked(clickedElement: DayWeather) {
-        println(clickedElement.dayOfTheWeek)
+        initHoursAdapter(details!!, clickedElement.dayOfTheWeek)
     }
 }

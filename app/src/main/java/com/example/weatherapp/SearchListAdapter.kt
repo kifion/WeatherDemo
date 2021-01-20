@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.model.CityModel
-import com.example.weatherapp.model.CityResponse
 import kotlinx.android.synthetic.main.recycler_view_search_item.view.*
 
 class SearchListAdapter(private val clickListener: ClickListener) :
