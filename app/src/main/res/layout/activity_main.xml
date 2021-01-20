@@ -48,11 +48,10 @@
             android:id="@+id/hourly_header"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="8dp"
+            android:background="@color/blue"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@color/blue"
             app:layout_constraintTop_toBottomOf="@+id/divider_first">
 
             <TextView
@@ -60,35 +59,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Time" />
+                android:text="Time"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/hourly_header_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Temp" />
+                android:text="Temp"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/hourly_header_rain_chance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Chance of rain" />
+                android:text="Chance of rain"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/hourly_header_wind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Wind (mhp)" />
+                android:text="Wind (mhp)"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/hourly_header_humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Humidity" />
+                android:text="Humidity"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -108,7 +112,7 @@
         <View
             android:id="@+id/divider_first"
             style="@style/Divider"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/daily_list" />
@@ -130,6 +134,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="144dp"
         android:text="City"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/city_image" />
@@ -140,6 +147,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Date"
+        android:textColor="@color/white"
+        android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/time"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/city_image"
@@ -151,7 +160,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:textSize="22sp"
         android:text="Time"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/city_image"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/date"
@@ -162,7 +173,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:textColor="@color/white"
         android:text="0"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />

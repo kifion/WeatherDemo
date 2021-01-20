@@ -25,6 +25,7 @@
         android:layout_marginStart="8dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:theme="@style/TextViewStyle"
         app:layout_constraintStart_toEndOf="@+id/hourly_image"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +38,7 @@
         android:layout_marginBottom="8dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:theme="@style/TextViewStyle"
         app:layout_constraintStart_toEndOf="@+id/hourly_time"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,6 +49,7 @@
         android:layout_marginStart="8dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:theme="@style/TextViewStyle"
         app:layout_constraintStart_toEndOf="@+id/hourly_temp"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,6 +60,7 @@
         android:layout_marginStart="8dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:theme="@style/TextViewStyle"
         app:layout_constraintStart_toEndOf="@+id/hourly_rain_chance"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,6 +71,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:theme="@style/TextViewStyle"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/hourly_wind"

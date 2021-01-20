@@ -1,5 +1,6 @@
 package com.example.weatherapp.model.network
 
+import com.example.weatherapp.R
 import com.example.weatherapp.model.CityDetailsModel
 import com.example.weatherapp.model.DayWeather
 import com.example.weatherapp.model.HourlyWeather

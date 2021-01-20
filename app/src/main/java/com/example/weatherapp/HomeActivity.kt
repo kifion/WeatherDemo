@@ -77,7 +77,7 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
         hourlyListAdapter = HourlyListAdapter()
         hourlyListAdapter!!.items = details.days[dayOfWeek].hourlyWeather
         hourly_list.adapter = hourlyListAdapter
-        hourly_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        hourly_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
