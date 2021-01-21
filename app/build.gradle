@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     final retrofit_version = '2.7.1'
     final glide_version = '4.11.0'
     final coroutines_version = '1.4.2'
@@ -59,7 +60,6 @@ dependencies {
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-jackson:$retrofit_version"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
 

@@ -1,4 +1,4 @@
-package com.example.weatherapp.model
+package com.example.weatherapp.domain.model
 
 data class CityDetailsModel(
     var name: String = "",
@@ -7,6 +7,8 @@ data class CityDetailsModel(
     var date: String = "",
     var temperature: Int = 0,
     var imageUrl: String = "https://i.stack.imgur.com/y9DpT.jpg",
+    val longitude: Double,
+    var latitude: Double,
     var days: ArrayList<DayWeather> = arrayListOf()
 )
 

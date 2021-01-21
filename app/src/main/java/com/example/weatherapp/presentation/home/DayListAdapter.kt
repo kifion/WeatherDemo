@@ -1,14 +1,13 @@
-package com.example.weatherapp
+package com.example.weatherapp.presentation.home
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.weatherapp.model.DayWeather
+import com.example.weatherapp.R
+import com.example.weatherapp.domain.model.DayWeather
 import kotlinx.android.synthetic.main.recycler_view_day_item.view.*
 
 class DayListAdapter(private val clickListener: ClickListener) :
@@ -27,7 +26,11 @@ class DayListAdapter(private val clickListener: ClickListener) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int) =
         ViewHolder(
             LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.recycler_view_day_item, viewGroup, false)
+                .inflate(
+                    R.layout.recycler_view_day_item,
+                    viewGroup,
+                    false
+                )
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =

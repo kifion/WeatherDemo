@@ -1,4 +1,4 @@
-package com.example.weatherapp
+package com.example.weatherapp.presentation.search
 
 import android.app.Activity
 import android.content.Intent
@@ -8,11 +8,14 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weatherapp.model.SearchCityModel
+import com.example.weatherapp.presentation.home.HomeActivity
+import com.example.weatherapp.R
+import com.example.weatherapp.domain.model.CityListModel
 import kotlinx.android.synthetic.main.activity_search.*
 
 
-class SearchActivity : AppCompatActivity(), SearchListAdapter.ClickListener {
+class SearchActivity : AppCompatActivity(),
+    SearchListAdapter.ClickListener {
     private lateinit var viewModel: SearchActivityViewModel
     lateinit var searchListAdapter: SearchListAdapter
 
@@ -35,14 +38,15 @@ class SearchActivity : AppCompatActivity(), SearchListAdapter.ClickListener {
         })
     }
 
-    private fun initSearchAdapter(list: ArrayList<SearchCityModel> = arrayListOf()) {
-        searchListAdapter = SearchListAdapter(this)
+    private fun initSearchAdapter(list: ArrayList<CityListModel> = arrayListOf()) {
+        searchListAdapter =
+            SearchListAdapter(this)
         searchListAdapter.items = list
         search_result_list.adapter = searchListAdapter
         search_result_list.layoutManager = LinearLayoutManager(this)
     }
 
-    override fun onItemClicked(clickedElement: SearchCityModel) {
+    override fun onItemClicked(clickedElement: CityListModel) {
         val intent = Intent()
         intent.putExtra(HomeActivity.CITY_KEY, clickedElement)
         setResult(Activity.RESULT_OK, intent)

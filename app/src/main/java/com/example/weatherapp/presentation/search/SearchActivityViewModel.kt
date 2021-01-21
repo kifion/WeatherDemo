@@ -1,19 +1,20 @@
-package com.example.weatherapp
+package com.example.weatherapp.presentation.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapp.model.SearchCityModel
-import com.example.weatherapp.repository.NetworkRepositoryImpl
+import com.example.weatherapp.domain.model.CityListModel
+import com.example.weatherapp.data.repository.NetworkRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchActivityViewModel : ViewModel() {
-    var cities = MutableLiveData<List<SearchCityModel>>()
+    var cities = MutableLiveData<List<CityListModel>>()
     var job: Job? = null
 
-    var repository = NetworkRepositoryImpl()
+    var repository =
+        NetworkRepository()
 
     fun getCities(search: String) {
         job?.cancel()

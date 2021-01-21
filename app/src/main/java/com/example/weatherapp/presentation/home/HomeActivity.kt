@@ -1,4 +1,4 @@
-package com.example.weatherapp
+package com.example.weatherapp.presentation.home
 
 import android.app.Activity
 import android.content.Intent
@@ -7,16 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.weatherapp.model.CityDetailsModel
-import com.example.weatherapp.model.DayWeather
-import com.example.weatherapp.model.SearchCityModel
+import com.example.weatherapp.R
+import com.example.weatherapp.domain.model.CityDetailsModel
+import com.example.weatherapp.domain.model.CityListModel
+import com.example.weatherapp.domain.model.DayWeather
+import com.example.weatherapp.domain.model.RadarModel
+import com.example.weatherapp.presentation.radar.RadarActivity
+import com.example.weatherapp.presentation.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
+class HomeActivity : AppCompatActivity(),
+    DayListAdapter.ClickListener {
     companion object {
         const val CITY_KEY = "city"
     }
@@ -35,7 +39,7 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
 
         viewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
 
-        viewModel.getCityDetails(SearchCityModel("324234", 4058662))
+        viewModel.getCityDetails(CityListModel("324234", 4058662))
 
         viewModel.details.observe(this, Observer {
             it?.let {
@@ -47,6 +51,13 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
         search_button.setOnClickListener {
             var intent = Intent(this, SearchActivity::class.java);
             startActivityForResult(intent, SEARCH_ACTIVITY_REQUEST_CODE);
+        }
+
+        radar_button.setOnClickListener {
+            var intent = Intent(this, RadarActivity::class.java).apply {
+                this.putExtra(RadarActivity.RADAR_KEY, RadarModel(details!!.name, details!!.longitude, details!!.latitude))
+            }
+            startActivity(intent)
         }
     }
 
@@ -72,7 +83,8 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
     }
 
     private fun initDaysAdapter(details: CityDetailsModel, dayOfWeek: Int = 0) {
-        dayListAdapter = DayListAdapter(this)
+        dayListAdapter =
+            DayListAdapter(this)
         dayListAdapter!!.selected = dayOfWeek
         dayListAdapter!!.items = details.days
         daily_list.adapter = dayListAdapter
@@ -82,7 +94,8 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
     }
 
     private fun initHoursAdapter(details: CityDetailsModel, dayOfWeek: Int = 0) {
-        hourlyListAdapter = HourlyListAdapter()
+        hourlyListAdapter =
+            HourlyListAdapter()
         hourlyListAdapter!!.items = details.days[dayOfWeek].hourlyWeather
         hourly_list.adapter = hourlyListAdapter
         hourly_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -93,7 +106,7 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
         when (requestCode) {
             SEARCH_ACTIVITY_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val selectedCity = data?.getParcelableExtra<SearchCityModel>(CITY_KEY)
+                    val selectedCity = data?.getParcelableExtra<CityListModel>(CITY_KEY)
                     viewModel.getCityDetails(selectedCity!!)
                 }
             }

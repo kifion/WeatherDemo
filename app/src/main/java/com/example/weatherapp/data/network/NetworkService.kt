@@ -1,9 +1,8 @@
-package com.example.weatherapp.network
+package com.example.weatherapp.data.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 
 object NetworkService {

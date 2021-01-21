@@ -1,7 +1,5 @@
 package com.example.weatherapp
 
-import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

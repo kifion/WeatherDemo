@@ -1,4 +1,4 @@
-package com.example.weatherapp
+package com.example.weatherapp.presentation.home
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.weatherapp.model.HourlyWeather
+import com.example.weatherapp.R
+import com.example.weatherapp.domain.model.HourlyWeather
 import kotlinx.android.synthetic.main.recycler_view_hourly_item.view.*
 
 class HourlyListAdapter() :
@@ -23,7 +24,11 @@ class HourlyListAdapter() :
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int) =
         ViewHolder(
             LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.recycler_view_hourly_item, viewGroup, false)
+                .inflate(
+                    R.layout.recycler_view_hourly_item,
+                    viewGroup,
+                    false
+                )
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =

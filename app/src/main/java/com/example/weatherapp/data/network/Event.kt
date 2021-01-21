@@ -1,4 +1,4 @@
-package com.example.weatherapp.network
+package com.example.weatherapp.data.network
 
 data class Event<out T>(val status: Status, val data: T?, val error: Error?) {
     companion object {
