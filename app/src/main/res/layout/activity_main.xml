@@ -59,78 +59,73 @@
                 android:id="@+id/hourly_image2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/hourly_header_time"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/hourly_header_time"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Time"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/hourly_header_temp"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/hourly_image2" />
 
             <TextView
                 android:id="@+id/hourly_header_temp"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Temp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/hourly_header_rain_chance"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/hourly_header_time" />
 
             <TextView
                 android:id="@+id/hourly_header_rain_chance"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:text="Chance of rain"
                 android:textColor="@color/white"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/hourly_header_wind"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/hourly_header_temp" />
 
             <TextView
                 android:id="@+id/hourly_header_wind"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:text="Wind (mhp)"
                 android:textColor="@color/white"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/hourly_header_humidity"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/hourly_header_rain_chance" />
 
             <TextView
                 android:id="@+id/hourly_header_humidity"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Humidity"
@@ -138,7 +133,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/hourly_header_wind" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

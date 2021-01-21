@@ -33,9 +33,9 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         viewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
+
+        viewModel.getCityDetails(SearchCityModel("324234", 4058662))
 
         viewModel.details.observe(this, Observer {
             it?.let {
@@ -71,8 +71,9 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
             .into(city_image)
     }
 
-    private fun initDaysAdapter(details: CityDetailsModel) {
+    private fun initDaysAdapter(details: CityDetailsModel, dayOfWeek: Int = 0) {
         dayListAdapter = DayListAdapter(this)
+        dayListAdapter!!.selected = dayOfWeek
         dayListAdapter!!.items = details.days
         daily_list.adapter = dayListAdapter
 
@@ -100,6 +101,7 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
     }
 
     override fun onItemClicked(clickedElement: DayWeather) {
+        initDaysAdapter(details!!, clickedElement.dayOfTheWeek)
         initHoursAdapter(details!!, clickedElement.dayOfTheWeek)
     }
 }

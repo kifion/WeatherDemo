@@ -5,10 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.weatherapp.model.HourlyWeather
-import kotlinx.android.synthetic.main.recycler_view_day_item.view.*
 import kotlinx.android.synthetic.main.recycler_view_hourly_item.view.*
-import kotlinx.android.synthetic.main.recycler_view_search_item.view.*
 
 class HourlyListAdapter() :
     RecyclerView.Adapter<HourlyListAdapter.ViewHolder>() {
@@ -33,9 +32,12 @@ class HourlyListAdapter() :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(item: HourlyWeather) = with(itemView) {
             Glide.with(context)
-                .load(context.getDrawable(getDrawableRes(item.weatherType)))
+                .load(getDrawableRes(item.weatherType))
                 .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(hourly_image)
+
             hourly_time.text = item.hour.toString()
             hourly_humidity.text = item.humidity.toString()
             hourly_rain_chance.text = item.rainChance.toString()
