@@ -1,18 +1,18 @@
 package com.example.weatherapp.data.network.model
 
-import com.example.weatherapp.domain.model.CityDetailsModel
+import com.example.weatherapp.domain.model.CityDetails
 import com.example.weatherapp.domain.model.DayWeather
 import com.example.weatherapp.domain.model.HourlyWeather
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class CityDetailsResponseNew(
+data class CityDetailsResponse(
     @field:JsonProperty("city")
     val city: City = City(),
 
     @field:JsonProperty("weather")
     val weather: Weather = Weather()
 ) {
-    fun toCityDetailsModel(): CityDetailsModel {
+    fun toCityDetailsModel(): CityDetails {
         var days = arrayListOf<DayWeather>();
         this.weather.days.forEach { responseDay ->
             var day = DayWeather()
@@ -37,7 +37,9 @@ data class CityDetailsResponseNew(
             days.add(day)
         }
 
-        return CityDetailsModel(
+        days.sortBy { it.dayOfTheWeek }
+
+        return CityDetails(
             this.city.name,
             this.city.asciiname,
             this.city.featureCode,

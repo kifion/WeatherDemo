@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class CityListModel(
-    var name: String = "",
-    var cityId: Int = -1
+data class Radar(
+    var name: String,
+    val longitude: Double,
+    var latitude: Double
 ): Parcelable

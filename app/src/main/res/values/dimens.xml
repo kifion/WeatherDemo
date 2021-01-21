@@ -6,4 +6,6 @@
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_largest">32dp</dimen>
     <dimen name="margin_very_largest">40dp</dimen>
+
+    <dimen name="button_size">28dp</dimen>
 </resources>

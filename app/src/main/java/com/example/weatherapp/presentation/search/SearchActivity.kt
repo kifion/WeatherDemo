@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.presentation.home.HomeActivity
 import com.example.weatherapp.R
-import com.example.weatherapp.domain.model.CityListModel
+import com.example.weatherapp.domain.model.CityList
 import kotlinx.android.synthetic.main.activity_search.*
 
 
@@ -31,6 +31,12 @@ class SearchActivity : AppCompatActivity(),
             viewModel.getCities(text.toString())
         }
 
+        close_button.setOnClickListener {
+            val intent = Intent()
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
         viewModel.cities.observe(this, Observer {
             it?.let {
                 initSearchAdapter(ArrayList(it))
@@ -38,7 +44,7 @@ class SearchActivity : AppCompatActivity(),
         })
     }
 
-    private fun initSearchAdapter(list: ArrayList<CityListModel> = arrayListOf()) {
+    private fun initSearchAdapter(list: ArrayList<CityList> = arrayListOf()) {
         searchListAdapter =
             SearchListAdapter(this)
         searchListAdapter.items = list
@@ -46,7 +52,7 @@ class SearchActivity : AppCompatActivity(),
         search_result_list.layoutManager = LinearLayoutManager(this)
     }
 
-    override fun onItemClicked(clickedElement: CityListModel) {
+    override fun onItemClicked(clickedElement: CityList) {
         val intent = Intent()
         intent.putExtra(HomeActivity.CITY_KEY, clickedElement)
         setResult(Activity.RESULT_OK, intent)

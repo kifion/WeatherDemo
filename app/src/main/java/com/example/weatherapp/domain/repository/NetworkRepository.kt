@@ -1,9 +1,9 @@
 package com.example.weatherapp.domain.repository
 
-import com.example.weatherapp.domain.model.CityDetailsModel
-import com.example.weatherapp.domain.model.CityListModel
+import com.example.weatherapp.domain.model.CityDetails
+import com.example.weatherapp.domain.model.CityList
 
 interface NetworkRepository {
-    suspend fun getCityList(search: String): List<CityListModel>
-    suspend fun getCityDetails(city: CityListModel): CityDetailsModel
+    suspend fun getCityList(search: String): List<CityList>
+    suspend fun getCityDetails(city: CityList): CityDetails
 }

@@ -10,7 +10,7 @@
         android:id="@+id/city_image"
         android:layout_width="0dp"
         android:layout_height="350dp"
-        android:background="@android:color/black"
+        android:background="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/search_button"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
         android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/margin_very_largest"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +29,8 @@
 
     <ImageView
         android:id="@+id/radar_button"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
         android:layout_marginTop="@dimen/margin_very_largest"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider_first">
 
             <ImageView
-                android:id="@+id/hourly_image2"
+                android:id="@+id/black_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:gravity="center"
@@ -78,7 +78,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/hourly_header_temp"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/hourly_image2" />
+                app:layout_constraintStart_toEndOf="@+id/black_image" />
 
             <TextView
                 android:id="@+id/hourly_header_temp"
@@ -154,7 +154,6 @@
         <View
             android:id="@+id/divider_first"
             style="@style/Divider"
-            android:layout_marginTop="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/daily_list" />
@@ -162,7 +161,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/daily_list"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@color/blue"
             app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +174,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="144dp"
-        android:text="City"
+        android:text="Add a new city..."
         android:textColor="@color/white"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -188,7 +187,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Date"
+        android:text="info will show"
         android:textColor="@color/white"
         android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/time"
@@ -202,9 +201,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
-        android:textSize="22sp"
-        android:text="Time"
+        android:text="after adding"
         android:textColor="@color/white"
+        android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/city_image"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/date"

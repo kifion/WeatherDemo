@@ -1,6 +1,6 @@
 package com.example.weatherapp.domain.model
 
-data class CityDetailsModel(
+data class CityDetails(
     var name: String = "",
     var asciiName: String = "",
     var code: String = "",

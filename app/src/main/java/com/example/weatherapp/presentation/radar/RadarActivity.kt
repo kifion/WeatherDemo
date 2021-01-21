@@ -3,7 +3,7 @@ package com.example.weatherapp.presentation.radar
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.R
-import com.example.weatherapp.domain.model.RadarModel
+import com.example.weatherapp.domain.model.Radar
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -19,7 +19,7 @@ class RadarActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private lateinit var mMap: GoogleMap
-    private lateinit var radarData: RadarModel
+    private lateinit var radarData: Radar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,7 @@ class RadarActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        intent.getParcelableExtra<RadarModel>(RADAR_KEY)?.let {
+        intent.getParcelableExtra<Radar>(RADAR_KEY)?.let {
             radarData = it
         }
     }

@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.domain.model.CityListModel
+import com.example.weatherapp.domain.model.CityList
 import kotlinx.android.synthetic.main.recycler_view_search_item.view.*
 
 class SearchListAdapter(private val clickListener: ClickListener) :
     RecyclerView.Adapter<SearchListAdapter.ViewHolder>() {
 
-    var items = ArrayList<CityListModel>()
+    var items = ArrayList<CityList>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -33,13 +33,13 @@ class SearchListAdapter(private val clickListener: ClickListener) :
         holder.bind(items[position], clickListener)
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(item: CityListModel, clickListener: ClickListener) = with(itemView) {
+        fun bind(item: CityList, clickListener: ClickListener) = with(itemView) {
             setOnClickListener { clickListener.onItemClicked(item) }
             city_name.text = item.name
         }
     }
 
     interface ClickListener {
-        fun onItemClicked(clickedElement: CityListModel)
+        fun onItemClicked(clickedElement: CityList)
     }
 }
