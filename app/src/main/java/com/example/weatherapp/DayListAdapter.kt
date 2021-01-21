@@ -35,7 +35,7 @@ class DayListAdapter(private val clickListener: ClickListener) :
                 .load(context.getDrawable(getDrawableRes(item.weatherType)))
                 .centerCrop()
                 .into(day_weather_image)
-            day_name.text = item.dayOfTheWeek.toString()
+            day_name.text = getDayById(item.dayOfTheWeek)
             day_temperature.text = item.high.toString()
         }
 
@@ -48,6 +48,21 @@ class DayListAdapter(private val clickListener: ClickListener) :
                 "partly_cloudy" -> R.drawable.ic_icon_weather_active_ic_partly_cloudy_active
                 "snow_sleet" -> R.drawable.ic_icon_weather_active_ic_snow_sleet_active
                 else -> R.drawable.ic_icon_weather_active_ic_cloudy_active
+            }
+        }
+
+        fun getDayById(dayOfTheWeek: Int): String {
+            return when(dayOfTheWeek) {
+                0 -> "Mon"
+                1 -> "Tue"
+                2 -> "Wen"
+                3 -> "Thu"
+                4 -> "Fri"
+                5 -> "Sat"
+                6 -> "Sun"
+                else -> {
+                    throw Exception("Unknown day of week")
+                }
             }
         }
     }

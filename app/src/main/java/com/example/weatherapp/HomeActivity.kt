@@ -6,12 +6,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.weatherapp.model.CityDetailsModel
-import com.example.weatherapp.model.CityModel
 import com.example.weatherapp.model.DayWeather
+import com.example.weatherapp.model.SearchCityModel
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
     companion object {
@@ -29,6 +32,8 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
         viewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
 
@@ -70,7 +75,9 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
         dayListAdapter = DayListAdapter(this)
         dayListAdapter!!.items = details.days
         daily_list.adapter = dayListAdapter
-        daily_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        val layoutManager = GridLayoutManager(this, 7)
+        daily_list.layoutManager = layoutManager
     }
 
     private fun initHoursAdapter(details: CityDetailsModel, dayOfWeek: Int = 0) {
@@ -85,7 +92,7 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener {
         when (requestCode) {
             SEARCH_ACTIVITY_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val selectedCity = data?.getParcelableExtra<CityModel>(CITY_KEY)
+                    val selectedCity = data?.getParcelableExtra<SearchCityModel>(CITY_KEY)
                     viewModel.getCityDetails(selectedCity!!)
                 }
             }

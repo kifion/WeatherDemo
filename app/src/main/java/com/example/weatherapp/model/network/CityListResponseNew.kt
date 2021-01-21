@@ -1,6 +1,6 @@
 package com.example.weatherapp.model.network
 
-import com.example.weatherapp.model.CityModel
+import com.example.weatherapp.model.SearchCityModel
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class CityListResponseNew(
@@ -75,8 +75,8 @@ data class CitiesItem(
     @field:JsonProperty("longitude")
     val longitude: Double? = null
 ) {
-    fun toCityModel(): CityModel {
-        return CityModel(
+    fun toCityModel(): SearchCityModel {
+        return SearchCityModel(
             this.name,
             this.geonameid
         )

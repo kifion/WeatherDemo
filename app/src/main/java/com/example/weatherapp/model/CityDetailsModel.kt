@@ -1,7 +1,5 @@
 package com.example.weatherapp.model
 
-import android.graphics.drawable.Drawable
-
 data class CityDetailsModel(
     var name: String = "",
     var asciiName: String = "",

@@ -26,6 +26,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:padding="2dp"
         app:layout_constraintEnd_toEndOf="@+id/day_name"
         app:layout_constraintStart_toStartOf="@+id/day_name"
         app:layout_constraintTop_toBottomOf="@+id/day_name"
@@ -38,11 +39,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:theme="@style/TextViewStyle"
+        android:layout_marginBottom="8dp"
         android:text="TextView"
+        android:theme="@style/TextViewStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/day_weather_image"
         app:layout_constraintStart_toStartOf="@+id/day_weather_image"
-        app:layout_constraintTop_toBottomOf="@+id/day_weather_image" />
+        app:layout_constraintTop_toBottomOf="@+id/day_weather_image"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
