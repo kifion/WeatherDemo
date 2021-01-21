@@ -1,69 +1,24 @@
 package com.example.weatherapp.data.network.model
 
-import com.example.weatherapp.domain.model.CityDetails
-import com.example.weatherapp.domain.model.DayWeather
-import com.example.weatherapp.domain.model.HourlyWeather
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class CityDetailsResponse(
     @field:JsonProperty("city")
-    val city: City = City(),
+    val city: CityResponse = CityResponse(),
 
     @field:JsonProperty("weather")
-    val weather: Weather = Weather()
-) {
-    fun toCityDetailsModel(): CityDetails {
-        var days = arrayListOf<DayWeather>();
-        this.weather.days.forEach { responseDay ->
-            var day = DayWeather()
-            var hourlyList = arrayListOf<HourlyWeather>();
-            responseDay.hourlyWeather.forEach { responseHour ->
-                var hourly = HourlyWeather(
-                    responseHour.weatherType,
-                    responseHour.hour,
-                    responseHour.temperature,
-                    responseHour.humidity,
-                    responseHour.windSpeed,
-                    responseHour.rainChance
-                )
-                hourlyList.add(hourly)
-            }
-            day.weatherType = responseDay.weatherType
-            day.high = responseDay.high
-            day.low = responseDay.low
-            day.dayOfTheWeek = responseDay.dayOfTheWeek
-            day.hourlyWeather = hourlyList
+    val weather: WeatherResponse = WeatherResponse()
+)
 
-            days.add(day)
-        }
-
-        days.sortBy { it.dayOfTheWeek }
-
-        return CityDetails(
-            this.city.name,
-            this.city.asciiname,
-            this.city.featureCode,
-            this.city.modificationDate,
-            days.first().hourlyWeather.first().temperature,
-            this.city.imageURLs.androidImageURLs.xhdpiImageURL,
-            this.city.longitude,
-            this.city.latitude,
-            days
-        );
-    }
-}
-
-data class Weather(
-
+data class WeatherResponse(
     @field:JsonProperty("days")
-    val days: ArrayList<DaysItem> = arrayListOf(),
+    val days: ArrayList<DayResponse> = arrayListOf(),
 
     @field:JsonProperty("id")
     val id: Int = 0
 )
 
-data class City(
-
+data class CityResponse(
     @field:JsonProperty("elevation")
     val elevation: Int = 0,
 
@@ -125,8 +80,7 @@ data class City(
     val longitude: Double = 0.0
 )
 
-data class DaysItem(
-
+data class DayResponse(
     @field:JsonProperty("weatherType")
     val weatherType: String = "",
 
@@ -140,26 +94,23 @@ data class DaysItem(
     val dayOfTheWeek: Int = 0,
 
     @field:JsonProperty("hourlyWeather")
-    val hourlyWeather: ArrayList<HourlyWeatherItem> = arrayListOf()
+    val hourlyWeather: ArrayList<HourlyWeatherResponse> = arrayListOf()
 )
 
 data class IOSImageURLs(
-
     @field:JsonProperty("imageURL")
     val imageURL: String = ""
 )
 
 data class ImageURLs(
-
     @field:JsonProperty("androidImageURLs")
-    val androidImageURLs: AndroidImageURLs = AndroidImageURLs(),
+    val androidImageURLs: AndroidImageURLsResponse = AndroidImageURLsResponse(),
 
     @field:JsonProperty("iOSImageURLs")
     val iOSImageURLs: IOSImageURLs = IOSImageURLs()
 )
 
-data class HourlyWeatherItem(
-
+data class HourlyWeatherResponse(
     @field:JsonProperty("weatherType")
     val weatherType: String = "",
 
@@ -179,8 +130,7 @@ data class HourlyWeatherItem(
     val rainChance: Int = 0
 )
 
-data class AndroidImageURLs(
-
+data class AndroidImageURLsResponse(
     @field:JsonProperty("hdpiImageURL")
     val hdpiImageURL: String = "",
 

@@ -39,6 +39,7 @@ dependencies {
     final glide_version = '4.11.0'
     final coroutines_version = '1.4.2'
     final view_model_lifecycle_version = '2.2.0'
+    final koin_version= "2.2.1"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -65,6 +66,12 @@ dependencies {
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
+
+    // Koin
+    implementation "org.koin:koin-core:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-fragment:$koin_version"
 
     // Testing
     testImplementation 'junit:junit:4.13.1'

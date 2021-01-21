@@ -6,17 +6,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.presentation.home.HomeActivity
 import com.example.weatherapp.R
 import com.example.weatherapp.domain.model.CityList
 import kotlinx.android.synthetic.main.activity_search.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
-class SearchActivity : AppCompatActivity(),
-    SearchListAdapter.ClickListener {
-    private lateinit var viewModel: SearchActivityViewModel
+class SearchActivity : AppCompatActivity(), SearchListAdapter.ClickListener {
+    val viewModel: SearchActivityViewModel by viewModel()
     lateinit var searchListAdapter: SearchListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +22,6 @@ class SearchActivity : AppCompatActivity(),
         setContentView(R.layout.activity_search)
 
         initSearchAdapter()
-
-        viewModel = ViewModelProvider(this).get(SearchActivityViewModel::class.java)
 
         search_edit_text.doOnTextChanged { text, start, before, count ->
             viewModel.getCities(text.toString())

@@ -5,25 +5,23 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.weatherapp.R
-import com.example.weatherapp.data.LocalStateDataHolder
-import com.example.weatherapp.data.repository.LocalStateRepositoryImpl
 import com.example.weatherapp.domain.model.CityDetails
 import com.example.weatherapp.domain.model.CityList
 import com.example.weatherapp.domain.model.DayWeather
 import com.example.weatherapp.domain.model.Radar
-import com.example.weatherapp.domain.repository.LocalStateRepository
+import com.example.weatherapp.domain.repository.ILocalStateRepository
 import com.example.weatherapp.presentation.Constants
 import com.example.weatherapp.presentation.home.adapter.DayListAdapter
 import com.example.weatherapp.presentation.home.adapter.HourlyListAdapter
 import com.example.weatherapp.presentation.radar.RadarActivity
 import com.example.weatherapp.presentation.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
-
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity(),
     DayListAdapter.ClickListener {
@@ -31,8 +29,9 @@ class HomeActivity : AppCompatActivity(),
         const val CITY_KEY = "city"
     }
 
-    private lateinit var localStateRepository: LocalStateRepository
-    private lateinit var viewModel: HomeActivityViewModel
+    val viewModel: HomeActivityViewModel by viewModel()
+    val localStateRepository: ILocalStateRepository by inject()
+
     private val SEARCH_ACTIVITY_REQUEST_CODE = 0
     var details: CityDetails? = null
     var dayListAdapter: DayListAdapter? = null
@@ -41,9 +40,6 @@ class HomeActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        viewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
-        localStateRepository = LocalStateRepositoryImpl(LocalStateDataHolder())
 
         viewModel.getCityDetails(CityList("324234", 4058662))
 
