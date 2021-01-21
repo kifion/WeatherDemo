@@ -9,10 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.weatherapp.R
-import com.example.weatherapp.domain.model.CityDetails
-import com.example.weatherapp.domain.model.CityList
-import com.example.weatherapp.domain.model.DayWeather
-import com.example.weatherapp.domain.model.Radar
+import com.example.weatherapp.domain.model.*
 import com.example.weatherapp.domain.repository.ILocalStateRepository
 import com.example.weatherapp.presentation.Constants
 import com.example.weatherapp.presentation.home.adapter.DayListAdapter
@@ -59,7 +56,7 @@ class HomeActivity : AppCompatActivity(),
             var intent = Intent(this, RadarActivity::class.java).apply {
                 this.putExtra(
                     RadarActivity.RADAR_KEY,
-                    Radar(details!!.name, details!!.longitude, details!!.latitude)
+                    Radar(details!!.city.name, details!!.city.longitude, details!!.city.latitude)
                 )
             }
             startActivity(intent)
@@ -74,15 +71,15 @@ class HomeActivity : AppCompatActivity(),
     }
 
     private fun setHeaderData(details: CityDetails) {
-        city.text = details.asciiName + ", " + details.code
-        date.text = details.date
-        time.text = details.date
-        temp.text = details.temperature.toString() + Constants.DEGREE
+        city.text = details.city.asciiName + ", " + details.city.code
+        date.text = details.city.date
+        time.text = details.city.date
+        temp.text = "-".toString() + Constants.DEGREE
     }
 
     private fun setHeaderImage(details: CityDetails) {
         Glide.with(this)
-            .load(details.imageUrl)
+            .load(details.city.imageUrl)
             .centerCrop()
             .into(city_image)
     }

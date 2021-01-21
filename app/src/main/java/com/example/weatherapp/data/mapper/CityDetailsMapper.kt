@@ -1,48 +1,57 @@
 package com.example.weatherapp.data.mapper
 
 import com.example.weatherapp.data.network.model.CityDetailsResponse
-import com.example.weatherapp.domain.model.CityDetails
-import com.example.weatherapp.domain.model.DayWeather
-import com.example.weatherapp.domain.model.HourlyWeather
+import com.example.weatherapp.data.network.model.CityResponse
+import com.example.weatherapp.data.network.model.DayWeatherResponse
+import com.example.weatherapp.data.network.model.HourlyWeatherResponse
+import com.example.weatherapp.domain.model.*
 
 open class CityDetailsMapper : Mapper<CityDetailsResponse, CityDetails> {
     override fun fromModel(type: CityDetailsResponse): CityDetails {
-        var days = arrayListOf<DayWeather>()
-        type.weather.days.forEach { responseDay ->
-            var day = DayWeather()
-            var hourlyList = arrayListOf<HourlyWeather>();
-            responseDay.hourlyWeather.forEach { responseHour ->
-                var hourly = HourlyWeather(
-                    responseHour.weatherType,
-                    responseHour.hour,
-                    responseHour.temperature,
-                    responseHour.humidity,
-                    responseHour.windSpeed,
-                    responseHour.rainChance
-                )
-                hourlyList.add(hourly)
-            }
-            day.weatherType = responseDay.weatherType
-            day.high = responseDay.high
-            day.low = responseDay.low
-            day.dayOfTheWeek = responseDay.dayOfTheWeek
-            day.hourlyWeather = hourlyList
-
-            days.add(day)
-        }
-
-        days.sortBy { it.dayOfTheWeek }
-
+        var list = ArrayList(type.weather.days.map { DayWeatherMapper().fromModel(it) })
+        list.sortBy { it.dayOfTheWeek }
         return CityDetails(
-            type.city.name,
-            type.city.asciiname,
-            type.city.featureCode,
-            type.city.modificationDate,
-            days.first().hourlyWeather.first().temperature,
-            type.city.imageURLs.androidImageURLs.xhdpiImageURL,
-            type.city.longitude,
-            type.city.latitude,
-            days
-        );
+            CityDataMapper().fromModel(type.city),
+            list
+        )
+    }
+}
+
+open class CityDataMapper: Mapper<CityResponse, CityData> {
+    override fun fromModel(type: CityResponse): CityData {
+        return CityData(
+            type.name,
+            type.asciiname,
+            type.featureCode,
+            type.modificationDate,
+            type.imageURLs.androidImageURLs.xhdpiImageURL,
+            type.longitude,
+            type.latitude
+        )
+    }
+}
+
+open class DayWeatherMapper: Mapper<DayWeatherResponse, DayWeather> {
+    override fun fromModel(type: DayWeatherResponse): DayWeather {
+        return DayWeather(
+            type.weatherType,
+            type.high,
+            type.low,
+            type.dayOfTheWeek,
+            ArrayList(type.hourlyWeather.map { HourlyWeatherMapper().fromModel(it) })
+        )
+    }
+}
+
+open class HourlyWeatherMapper: Mapper<HourlyWeatherResponse, HourlyWeather> {
+    override fun fromModel(type: HourlyWeatherResponse): HourlyWeather {
+        return HourlyWeather(
+            type.weatherType,
+            type.hour,
+            type.temperature,
+            type.humidity,
+            type.windSpeed,
+            type.rainChance
+        )
     }
 }

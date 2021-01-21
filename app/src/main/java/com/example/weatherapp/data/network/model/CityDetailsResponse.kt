@@ -12,7 +12,7 @@ data class CityDetailsResponse(
 
 data class WeatherResponse(
     @field:JsonProperty("days")
-    val days: ArrayList<DayResponse> = arrayListOf(),
+    val days: ArrayList<DayWeatherResponse> = arrayListOf(),
 
     @field:JsonProperty("id")
     val id: Int = 0
@@ -80,7 +80,7 @@ data class CityResponse(
     val longitude: Double = 0.0
 )
 
-data class DayResponse(
+data class DayWeatherResponse(
     @field:JsonProperty("weatherType")
     val weatherType: String = "",
 

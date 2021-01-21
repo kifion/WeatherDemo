@@ -1,15 +1,18 @@
 package com.example.weatherapp.domain.model
 
 data class CityDetails(
+    var city: CityData = CityData(),
+    var days: ArrayList<DayWeather> = arrayListOf()
+)
+
+data class CityData(
     var name: String = "",
     var asciiName: String = "",
     var code: String = "",
     var date: String = "",
-    var temperature: Int = 0,
     var imageUrl: String = "",
-    val longitude: Double,
-    var latitude: Double,
-    var days: ArrayList<DayWeather> = arrayListOf()
+    val longitude: Double = 0.0,
+    var latitude: Double = 0.0
 )
 
 data class DayWeather(
