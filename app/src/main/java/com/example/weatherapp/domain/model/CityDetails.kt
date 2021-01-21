@@ -6,7 +6,7 @@ data class CityDetails(
     var code: String = "",
     var date: String = "",
     var temperature: Int = 0,
-    var imageUrl: String = "https://i.stack.imgur.com/y9DpT.jpg",
+    var imageUrl: String = "",
     val longitude: Double,
     var latitude: Double,
     var days: ArrayList<DayWeather> = arrayListOf()

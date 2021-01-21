@@ -5,11 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.domain.model.CityList
 import com.example.weatherapp.data.repository.NetworkRepositoryImpl
+import com.example.weatherapp.presentation.base.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SearchActivityViewModel : ViewModel() {
+class SearchActivityViewModel : BaseViewModel() {
     var cities = MutableLiveData<List<CityList>>()
     var job: Job? = null
 

@@ -18,6 +18,8 @@ import com.example.weatherapp.domain.model.DayWeather
 import com.example.weatherapp.domain.model.Radar
 import com.example.weatherapp.domain.repository.LocalStateRepository
 import com.example.weatherapp.presentation.Constants
+import com.example.weatherapp.presentation.home.adapter.DayListAdapter
+import com.example.weatherapp.presentation.home.adapter.HourlyListAdapter
 import com.example.weatherapp.presentation.radar.RadarActivity
 import com.example.weatherapp.presentation.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_main.*

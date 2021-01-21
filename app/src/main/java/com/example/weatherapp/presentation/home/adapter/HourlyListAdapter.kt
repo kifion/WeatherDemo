@@ -1,11 +1,10 @@
-package com.example.weatherapp.presentation.home
+package com.example.weatherapp.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.weatherapp.R
 import com.example.weatherapp.domain.model.HourlyWeather
 import com.example.weatherapp.domain.model.WeatherType
@@ -41,8 +40,6 @@ class HourlyListAdapter() :
             Glide.with(context)
                 .load(WeatherType.getDrawableActiveByType(item.weatherType))
                 .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
                 .into(hourly_image)
 
             hourly_time.text = item.hour.toString()

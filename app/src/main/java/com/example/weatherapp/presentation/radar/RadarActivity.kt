@@ -2,8 +2,10 @@ package com.example.weatherapp.presentation.radar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp.R
 import com.example.weatherapp.domain.model.Radar
+import com.example.weatherapp.presentation.home.HomeActivityViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,12 +20,15 @@ class RadarActivity : AppCompatActivity(), OnMapReadyCallback {
         const val MAP_ZOOM = 9.0F
     }
 
+    private lateinit var viewModel: RadarActivityViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var radarData: Radar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_radar)
+        viewModel = ViewModelProvider(this).get(RadarActivityViewModel::class.java)
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
