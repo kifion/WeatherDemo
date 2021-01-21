@@ -7,7 +7,7 @@ data class CityListResponse(
     val startIndex: Int = 0,
 
     @field:JsonProperty("cities")
-    val cities: ArrayList<CityResponse> = arrayListOf(),
+    val cities: ArrayList<CityDataResponse> = arrayListOf(),
 
     @field:JsonProperty("totalCitiesFound")
     val totalCitiesFound: Int = 0

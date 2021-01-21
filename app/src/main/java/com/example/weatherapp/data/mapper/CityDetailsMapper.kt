@@ -1,10 +1,11 @@
 package com.example.weatherapp.data.mapper
 
 import com.example.weatherapp.data.network.model.CityDetailsResponse
-import com.example.weatherapp.data.network.model.CityResponse
+import com.example.weatherapp.data.network.model.CityDataResponse
 import com.example.weatherapp.data.network.model.DayWeatherResponse
 import com.example.weatherapp.data.network.model.HourlyWeatherResponse
 import com.example.weatherapp.domain.model.*
+import com.example.weatherapp.presentation.Constants
 
 open class CityDetailsMapper : Mapper<CityDetailsResponse, CityDetails> {
     override fun fromModel(type: CityDetailsResponse): CityDetails {
@@ -17,14 +18,14 @@ open class CityDetailsMapper : Mapper<CityDetailsResponse, CityDetails> {
     }
 }
 
-open class CityDataMapper: Mapper<CityResponse, CityData> {
-    override fun fromModel(type: CityResponse): CityData {
+open class CityDataMapper: Mapper<CityDataResponse, CityData> {
+    override fun fromModel(type: CityDataResponse): CityData {
+        var name = type.asciiname + if(type.admin1Code.isNotEmpty()) ", " + type.admin1Code else ""
         return CityData(
-            type.name,
-            type.asciiname,
-            type.featureCode,
-            type.modificationDate,
+            name,
             type.imageURLs.androidImageURLs.xhdpiImageURL,
+            type.timezone,
+            type.elevation.toString() + Constants.DEGREE,
             type.longitude,
             type.latitude
         )

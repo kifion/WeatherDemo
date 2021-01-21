@@ -7,10 +7,9 @@ data class CityDetails(
 
 data class CityData(
     var name: String = "",
-    var asciiName: String = "",
-    var code: String = "",
-    var date: String = "",
     var imageUrl: String = "",
+    var timezone: String = "",
+    var temperature: String = "",
     val longitude: Double = 0.0,
     var latitude: Double = 0.0
 )

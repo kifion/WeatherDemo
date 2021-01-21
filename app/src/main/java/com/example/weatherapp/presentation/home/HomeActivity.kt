@@ -9,9 +9,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.weatherapp.R
-import com.example.weatherapp.domain.model.*
+import com.example.weatherapp.domain.DataState
+import com.example.weatherapp.domain.model.CityDetails
+import com.example.weatherapp.domain.model.CityList
+import com.example.weatherapp.domain.model.DayWeather
+import com.example.weatherapp.domain.model.Radar
 import com.example.weatherapp.domain.repository.ILocalStateRepository
-import com.example.weatherapp.presentation.Constants
+import com.example.weatherapp.domain.utils.DatetimeUtils
 import com.example.weatherapp.presentation.home.adapter.DayListAdapter
 import com.example.weatherapp.presentation.home.adapter.HourlyListAdapter
 import com.example.weatherapp.presentation.radar.RadarActivity
@@ -39,6 +43,7 @@ class HomeActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
 
         viewModel.getCityDetails(CityList("324234", 4058662))
+        localStateRepository.setState(DataState.ERROR)
 
         viewModel.details.observe(this, Observer {
             it?.let {
@@ -71,10 +76,10 @@ class HomeActivity : AppCompatActivity(),
     }
 
     private fun setHeaderData(details: CityDetails) {
-        city.text = details.city.asciiName + ", " + details.city.code
-        date.text = details.city.date
-        time.text = details.city.date
-        temp.text = "-".toString() + Constants.DEGREE
+        city.text = details.city.name
+        date.text = DatetimeUtils.getDate(details.city.timezone)
+        time.text = DatetimeUtils.getTime(details.city.timezone)
+        temp.text = details.city.temperature
     }
 
     private fun setHeaderImage(details: CityDetails) {

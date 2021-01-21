@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class CityDetailsResponse(
     @field:JsonProperty("city")
-    val city: CityResponse = CityResponse(),
+    val city: CityDataResponse = CityDataResponse(),
 
     @field:JsonProperty("weather")
     val weather: WeatherResponse = WeatherResponse()
@@ -18,7 +18,7 @@ data class WeatherResponse(
     val id: Int = 0
 )
 
-data class CityResponse(
+data class CityDataResponse(
     @field:JsonProperty("elevation")
     val elevation: Int = 0,
 
