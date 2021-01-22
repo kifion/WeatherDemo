@@ -169,67 +169,11 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/city_pager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
-        android:text="Add a new city..."
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/city_image" />
-
-    <TextView
-        android:id="@+id/date_pager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="info will show"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/time_pager"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/city_image"
-        app:layout_constraintTop_toBottomOf="@+id/city_pager" />
-
-    <TextView
-        android:id="@+id/time_pager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="after adding"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/city_image"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/date_pager"
-        app:layout_constraintTop_toBottomOf="@+id/city_pager" />
-
-    <TextView
-        android:id="@+id/temp_pager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="0"
-        android:textColor="@color/white"
-        android:textSize="50sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_pager" />
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/weather_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/city_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

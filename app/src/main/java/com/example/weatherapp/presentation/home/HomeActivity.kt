@@ -16,7 +16,8 @@ import com.example.weatherapp.domain.model.CityList
 import com.example.weatherapp.domain.model.DayWeather
 import com.example.weatherapp.domain.model.Radar
 import com.example.weatherapp.domain.repository.ILocalStateRepository
-import com.example.weatherapp.domain.utils.DatetimeUtils
+import com.example.weatherapp.presentation.Constants.Companion.CITY_KEY
+import com.example.weatherapp.presentation.Constants.Companion.SEARCH_ACTIVITY_REQUEST_CODE
 import com.example.weatherapp.presentation.home.adapter.CityPagerAdapter
 import com.example.weatherapp.presentation.home.adapter.DayListAdapter
 import com.example.weatherapp.presentation.home.adapter.HourlyListAdapter
@@ -27,17 +28,9 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class HomeActivity : AppCompatActivity(),
-    DayListAdapter.ClickListener, CityViewPagerFragment.Callback  {
-    companion object {
-        const val CITY_KEY = "city"
-    }
-
+class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener, CityViewPagerFragment.Callback {
     val viewModel: HomeActivityViewModel by viewModel()
     val localStateRepository: ILocalStateRepository by inject()
-
-
-    private val SEARCH_ACTIVITY_REQUEST_CODE = 0
 
     var dayListAdapter: DayListAdapter? = null
     var hourlyListAdapter: HourlyListAdapter? = null
@@ -52,26 +45,6 @@ class HomeActivity : AppCompatActivity(),
 
         initViewPager(cities)
 
-        viewModel.getCityDetails(CityList("324234", 4058662))
-        localStateRepository.setState(DataState.ERROR)
-
-        weather_pager.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                println("onPageSelected: " + position)
-                currentCity = cities[position]
-            }
-            override fun onPageScrollStateChanged(state: Int) {
-                //println("onPageScrollStateChanged: " + state)
-            }
-        })
-
         viewModel.details.observe(this, Observer {
             it?.let {
                 currentCity = it
@@ -81,16 +54,38 @@ class HomeActivity : AppCompatActivity(),
             }
         })
 
-        search_button.setOnClickListener {
-            var intent = Intent(this, SearchActivity::class.java);
-            startActivityForResult(intent, SEARCH_ACTIVITY_REQUEST_CODE);
-        }
+        weather_pager.addOnPageChangeListener(object : OnPageChangeListener {
+            override fun onPageSelected(position: Int) {
+                println("onPageSelected: " + position)
+                setHeaderImage(cities[position])
+                currentCity = cities[position]
+            }
 
-        radar_button.setOnClickListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+        })
+
+        search_button.setOnClickListener { openSearchActivity() }
+        radar_button.setOnClickListener { openRadarActivity() }
+    }
+
+    fun openSearchActivity() {
+        startActivityForResult(
+            Intent(this, SearchActivity::class.java),
+            SEARCH_ACTIVITY_REQUEST_CODE
+        );
+    }
+
+    fun openRadarActivity() {
+        currentCity?.let {
             var intent = Intent(this, RadarActivity::class.java).apply {
                 this.putExtra(
                     RadarActivity.RADAR_KEY,
-                    Radar(currentCity!!.city.name, currentCity!!.city.longitude, currentCity!!.city.latitude)
+                    Radar(
+                        it.city.name,
+                        it.city.longitude,
+                        it.city.latitude
+                    )
                 )
             }
             startActivity(intent)
@@ -98,7 +93,7 @@ class HomeActivity : AppCompatActivity(),
     }
 
     fun addCity(cityDetails: CityDetails) {
-        if(!cities.map { it.city.name }.contains(cityDetails.city.name)) {
+        if (!cities.map { it.city.name }.contains(cityDetails.city.name)) {
             cities.add(cityDetails)
         }
     }
@@ -110,17 +105,9 @@ class HomeActivity : AppCompatActivity(),
 
     private fun updateUi(details: CityDetails) {
         setHeaderImage(details)
-        setHeaderData(details)
         initDaysAdapter(details)
         initHoursAdapter(details)
         initViewPager(cities)
-    }
-
-    private fun setHeaderData(details: CityDetails) {
-        city_pager.text = details.city.name
-        date_pager.text = DatetimeUtils.getDate(details.city.timezone)
-        time_pager.text = DatetimeUtils.getTime(details.city.timezone)
-        temp_pager.text = details.city.temperature
     }
 
     private fun setHeaderImage(details: CityDetails) {
@@ -131,22 +118,23 @@ class HomeActivity : AppCompatActivity(),
     }
 
     private fun initDaysAdapter(details: CityDetails, dayOfWeek: Int = 0) {
-        dayListAdapter =
-            DayListAdapter(this)
-        dayListAdapter!!.selected = dayOfWeek
-        dayListAdapter!!.items = details.days
-        daily_list.adapter = dayListAdapter
-
-        val layoutManager = GridLayoutManager(this, 7)
-        daily_list.layoutManager = layoutManager
+        dayListAdapter = DayListAdapter(this)
+        dayListAdapter?.let {
+            it.selected = dayOfWeek
+            it.items = details.days
+            daily_list.adapter = it
+            daily_list.layoutManager = GridLayoutManager(this, 7)
+        }
     }
 
     private fun initHoursAdapter(details: CityDetails, dayOfWeek: Int = 0) {
-        hourlyListAdapter =
-            HourlyListAdapter()
-        hourlyListAdapter!!.items = details.days[dayOfWeek].hourlyWeather
-        hourly_list.adapter = hourlyListAdapter
-        hourly_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        hourlyListAdapter = HourlyListAdapter()
+        hourlyListAdapter?.let {
+            it.items = details.days[dayOfWeek].hourlyWeather
+            hourly_list.adapter = it
+            hourly_list.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -155,15 +143,19 @@ class HomeActivity : AppCompatActivity(),
             SEARCH_ACTIVITY_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val selectedCity = data?.getParcelableExtra<CityList>(CITY_KEY)
-                    viewModel.getCityDetails(selectedCity!!)
+                    selectedCity?.let {
+                        viewModel.getCityDetails(selectedCity)
+                    }
                 }
             }
         }
     }
 
     override fun onItemClicked(clickedElement: DayWeather) {
-        initDaysAdapter(currentCity!!, clickedElement.dayOfTheWeek)
-        initHoursAdapter(currentCity!!, clickedElement.dayOfTheWeek)
+        currentCity?.let {
+            initDaysAdapter(it, clickedElement.dayOfTheWeek)
+            initHoursAdapter(it, clickedElement.dayOfTheWeek)
+        }
     }
 
     override fun setViewPagerCurrentPage(page: Int) {

@@ -1,6 +1,5 @@
 package com.example.weatherapp.presentation.home
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -45,7 +44,8 @@ class CityViewPagerFragment : Fragment() {
         details?.let {
             view.findViewById<TextView>(R.id.city_pager).text = it.city.name
             view.findViewById<TextView>(R.id.date_pager).text = DatetimeUtils.getDate(it.city.timezone)
-            view.findViewById<TextView>(R.id.time_pager).text = DatetimeUtils.getTime(it.city.timezone)
+            view.findViewById<TextView>(R.id.time_pager).text =
+                DatetimeUtils.getTime(it.city.timezone)
             view.findViewById<TextView>(R.id.temp_pager).text = it.city.temperature
         }
         return view

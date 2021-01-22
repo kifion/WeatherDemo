@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weatherapp.presentation.home.HomeActivity
 import com.example.weatherapp.R
 import com.example.weatherapp.domain.model.CityList
+import com.example.weatherapp.presentation.Constants
 import kotlinx.android.synthetic.main.activity_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -50,7 +50,7 @@ class SearchActivity : AppCompatActivity(), SearchListAdapter.ClickListener {
 
     override fun onItemClicked(clickedElement: CityList) {
         val intent = Intent()
-        intent.putExtra(HomeActivity.CITY_KEY, clickedElement)
+        intent.putExtra(Constants.CITY_KEY, clickedElement)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
