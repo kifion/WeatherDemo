@@ -11,7 +11,6 @@ import com.example.weatherapp.R
 import com.example.weatherapp.domain.model.CityDetails
 import com.example.weatherapp.domain.utils.DatetimeUtils
 
-
 private const val ARG_CITY_DETAILS = "cityDetails"
 
 class CityViewPagerFragment : Fragment() {
@@ -43,7 +42,8 @@ class CityViewPagerFragment : Fragment() {
 
         details?.let {
             view.findViewById<TextView>(R.id.city_pager).text = it.city.name
-            view.findViewById<TextView>(R.id.date_pager).text = DatetimeUtils.getDate(it.city.timezone)
+            view.findViewById<TextView>(R.id.date_pager).text =
+                DatetimeUtils.getDate(it.city.timezone)
             view.findViewById<TextView>(R.id.time_pager).text =
                 DatetimeUtils.getTime(it.city.timezone)
             view.findViewById<TextView>(R.id.temp_pager).text = it.city.temperature
