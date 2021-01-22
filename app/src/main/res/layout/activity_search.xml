@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
     tools:context=".presentation.search.SearchActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,6 +36,13 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
+        android:textColorHint="@color/white"
+        android:shadowColor="@color/white"
+        android:textColorLink="@color/white"
+        android:outlineSpotShadowColor="@color/white"
+        android:outlineAmbientShadowColor="@color/white"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/white"
         android:hint="Enter required city..."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -10,7 +10,6 @@ import com.example.weatherapp.data.repository.LocalStateRepository
 import com.example.weatherapp.data.repository.NetworkRepository
 import com.example.weatherapp.domain.repository.ILocalStateRepository
 import com.example.weatherapp.presentation.home.HomeActivityViewModel
-import com.example.weatherapp.presentation.radar.RadarActivityViewModel
 import com.example.weatherapp.presentation.search.SearchActivityViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -21,12 +20,11 @@ val mainModule = module {
 
 val viewModelModule = module {
     viewModel { HomeActivityViewModel() }
-    viewModel { RadarActivityViewModel() }
     viewModel { SearchActivityViewModel() }
 }
 
 val repositoryModule = module {
-    factory { provideLocationStateRepository() }
+    single { provideLocationStateRepository() }
     single { NetworkRepository() }
 }
 

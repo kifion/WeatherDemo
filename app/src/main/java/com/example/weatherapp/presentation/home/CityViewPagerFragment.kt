@@ -20,7 +20,7 @@ class CityViewPagerFragment : Fragment() {
     private var mCallback: Callback? = null
 
     interface Callback {
-        fun setViewPagerCurrentPage(page: Int)
+        fun setCityPagerCurrentPage(page: Int)
     }
 
     override fun onAttach(context: Context) {

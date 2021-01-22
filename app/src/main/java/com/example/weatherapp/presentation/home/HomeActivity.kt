@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.bumptech.glide.Glide
 import com.example.weatherapp.R
-import com.example.weatherapp.domain.DataState
 import com.example.weatherapp.domain.model.CityDetails
 import com.example.weatherapp.domain.model.CityList
 import com.example.weatherapp.domain.model.DayWeather
-import com.example.weatherapp.domain.model.Radar
 import com.example.weatherapp.domain.repository.ILocalStateRepository
 import com.example.weatherapp.presentation.Constants.Companion.CITY_KEY
+import com.example.weatherapp.presentation.Constants.Companion.DAYS_NUMBER
 import com.example.weatherapp.presentation.Constants.Companion.SEARCH_ACTIVITY_REQUEST_CODE
 import com.example.weatherapp.presentation.home.adapter.CityPagerAdapter
 import com.example.weatherapp.presentation.home.adapter.DayListAdapter
@@ -27,8 +26,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
-class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener, CityViewPagerFragment.Callback {
+class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener,
+    CityViewPagerFragment.Callback {
     val viewModel: HomeActivityViewModel by viewModel()
     val localStateRepository: ILocalStateRepository by inject()
 
@@ -36,66 +35,48 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener, CityView
     var hourlyListAdapter: HourlyListAdapter? = null
     private lateinit var pagerAdapter: CityPagerAdapter
 
-    private var cities: MutableList<CityDetails> = arrayListOf()
-    var currentCity: CityDetails? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initViewPager(cities)
+        initViewPager(localStateRepository.getCities())
 
         viewModel.details.observe(this, Observer {
             it?.let {
-                currentCity = it
-                addCity(it)
-                updateUi(it)
-                setViewPagerCurrentPage(cities.size - 1)
+                addNewCity(it)
             }
         })
 
         weather_pager.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageSelected(position: Int) {
-                println("onPageSelected: " + position)
-                setHeaderImage(cities[position])
-                currentCity = cities[position]
+                selectCity(localStateRepository.getCities()[position])
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
         })
 
         search_button.setOnClickListener { openSearchActivity() }
         radar_button.setOnClickListener { openRadarActivity() }
     }
 
-    fun openSearchActivity() {
-        startActivityForResult(
-            Intent(this, SearchActivity::class.java),
-            SEARCH_ACTIVITY_REQUEST_CODE
-        );
+    fun addNewCity(cityDetails: CityDetails) {
+        localStateRepository.setCurrentCity(cityDetails)
+        localStateRepository.addCity(cityDetails)
+        updateUi(cityDetails)
+        setCityPagerCurrentPage(localStateRepository.getCities().size - 1)
     }
 
-    fun openRadarActivity() {
-        currentCity?.let {
-            var intent = Intent(this, RadarActivity::class.java).apply {
-                this.putExtra(
-                    RadarActivity.RADAR_KEY,
-                    Radar(
-                        it.city.name,
-                        it.city.longitude,
-                        it.city.latitude
-                    )
-                )
-            }
-            startActivity(intent)
-        }
-    }
-
-    fun addCity(cityDetails: CityDetails) {
-        if (!cities.map { it.city.name }.contains(cityDetails.city.name)) {
-            cities.add(cityDetails)
-        }
+    fun selectCity(cityDetails: CityDetails) {
+        localStateRepository.setCurrentCity(cityDetails)
+        setHeaderImage(cityDetails)
+        initDaysAdapter(cityDetails)
+        initHoursAdapter(cityDetails)
     }
 
     fun initViewPager(cities: MutableList<CityDetails>) {
@@ -107,7 +88,7 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener, CityView
         setHeaderImage(details)
         initDaysAdapter(details)
         initHoursAdapter(details)
-        initViewPager(cities)
+        initViewPager(localStateRepository.getCities())
     }
 
     private fun setHeaderImage(details: CityDetails) {
@@ -123,7 +104,7 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener, CityView
             it.selected = dayOfWeek
             it.items = details.days
             daily_list.adapter = it
-            daily_list.layoutManager = GridLayoutManager(this, 7)
+            daily_list.layoutManager = GridLayoutManager(this, DAYS_NUMBER)
         }
     }
 
@@ -135,6 +116,15 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener, CityView
             hourly_list.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         }
+    }
+
+    override fun onDayItemClicked(dayWeather: DayWeather) {
+        initDaysAdapter(localStateRepository.getCurrentCity(), dayWeather.dayOfTheWeek)
+        initHoursAdapter(localStateRepository.getCurrentCity(), dayWeather.dayOfTheWeek)
+    }
+
+    override fun setCityPagerCurrentPage(page: Int) {
+        weather_pager.currentItem = page
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -151,14 +141,16 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener, CityView
         }
     }
 
-    override fun onItemClicked(clickedElement: DayWeather) {
-        currentCity?.let {
-            initDaysAdapter(it, clickedElement.dayOfTheWeek)
-            initHoursAdapter(it, clickedElement.dayOfTheWeek)
-        }
+    fun openSearchActivity() {
+        startActivityForResult(
+            Intent(this, SearchActivity::class.java),
+            SEARCH_ACTIVITY_REQUEST_CODE
+        );
     }
 
-    override fun setViewPagerCurrentPage(page: Int) {
-        weather_pager.currentItem = page
+    fun openRadarActivity() {
+        if (localStateRepository.getCurrentCity().city.name.isNotEmpty()) {
+            startActivity(Intent(this, RadarActivity::class.java))
+        }
     }
 }

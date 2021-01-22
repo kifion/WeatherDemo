@@ -28,8 +28,7 @@ class SearchActivity : AppCompatActivity(), SearchListAdapter.ClickListener {
         }
 
         close_button.setOnClickListener {
-            val intent = Intent()
-            setResult(Activity.RESULT_OK, intent)
+            setResult(Activity.RESULT_OK, Intent())
             finish()
         }
 

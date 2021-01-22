@@ -45,7 +45,7 @@ class DayListAdapter(private val clickListener: ClickListener) :
             selected: Int,
             clickListener: ClickListener
         ) = with(itemView) {
-            setOnClickListener { clickListener.onItemClicked(item) }
+            setOnClickListener { clickListener.onDayItemClicked(item) }
             var isSelected = selected == item.dayOfTheWeek
             var drawable = ContextCompat.getDrawable(
                 context,
@@ -66,6 +66,6 @@ class DayListAdapter(private val clickListener: ClickListener) :
     }
 
     interface ClickListener {
-        fun onItemClicked(clickedElement: DayWeather)
+        fun onDayItemClicked(dayWeather: DayWeather)
     }
 }
