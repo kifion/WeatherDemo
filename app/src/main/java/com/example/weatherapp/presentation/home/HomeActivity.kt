@@ -3,6 +3,7 @@ package com.example.weatherapp.presentation.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -39,6 +40,7 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        showHourlyHeader()
         initViewPager(localStateRepository.getCities())
 
         viewModel.details.observe(this, Observer {
@@ -70,6 +72,7 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener,
         localStateRepository.addCity(cityDetails)
         updateUi(cityDetails)
         setCityPagerCurrentPage(localStateRepository.getCities().size - 1)
+        showHourlyHeader()
     }
 
     fun selectCity(cityDetails: CityDetails) {
@@ -77,6 +80,14 @@ class HomeActivity : AppCompatActivity(), DayListAdapter.ClickListener,
         setHeaderImage(cityDetails)
         initDaysAdapter(cityDetails)
         initHoursAdapter(cityDetails)
+    }
+
+    fun showHourlyHeader() {
+        hourly_header.visibility =
+            if (localStateRepository.getCities().isNotEmpty()) View.VISIBLE else View.GONE
+
+        divider_first.visibility =
+            if (localStateRepository.getCities().isNotEmpty()) View.VISIBLE else View.GONE
     }
 
     fun initViewPager(cities: MutableList<CityDetails>) {
